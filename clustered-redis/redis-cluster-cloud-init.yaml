@@ -1,0 +1,16 @@
+#cloud-config
+packages:
+- redis
+write_files:
+- path: /etc/redis/redis.conf
+  defer: true
+  content: |
+    port 6379
+    dir /var/lib/redis
+    appendonly yes
+    protected-mode no
+    cluster-enabled yes
+    cluster-config-file nodes.conf
+    cluster-node-timeout 5000
+runcmd:
+- systemctl restart redis
